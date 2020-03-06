@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        input{
+            height: 22px;
+            width: 350px;
+            font-size: 12px;
+        }
+        #sub{
+            background-color: rgb(204, 204, 204);
+            border: 1px;
+            box-shadow: 0;
+        }
+        #x{
+            color: red;
+        }
+        p{
+            line-height: 10px;
+            font-size: 12px;
+        }
+        #school{
+            width: 354px;
+            height: 28px;
+        }
+    </style>
+</head>
+<body>
+    <h1>学生信息</h1>
+    <fieldset style="width: 370px; height: 500px;">
+        <legend id="x">学生档案</legend>
+    <form id="testform" method="get" action="">
+        <p>姓名：</p>
+        <input type="text" name="name1" placeholder="请输入姓名" required/><span id="x">&nbsp;*</span>
+        <p>学号：</p>
+        <input type="text" name="name" placeholder="请输入学号" required/><span id="x">&nbsp;*</span> 
+        <p>手机号码：</p>
+        <input type="tel" name="t" placeholder="请输入手机号" required/><span id="x">&nbsp;*</span>
+        <p>邮箱地址：</p>
+        <input type="email" name="email" placeholder="请输入邮箱" required/><span id="x">&nbsp;*</span>
+        <p>录取学校：</p>
+        <input type="search" name="school" list="school-name" id="school" /><br/> 
+        <datalist id="school-name">
+                <option>河北师范大学</option>
+                <option>厦门大学</option>
+                <option>河北科技大学</option>
+                <option>河北医科大学</option>
+                <option>北京大学</option>
+                <option>清华大学</option>
+            </datalist>
+        <p>入学成绩：</p>
+        <input type="number" name="cj" /><br/> 
+        <p>入学时间：</p>
+        <input type="date" name="datedemo"/><br/><br/>
+        <input type="submit" value="提交"/>
+    </form>
+</body>
+</html>
