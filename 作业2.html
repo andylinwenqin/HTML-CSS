@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>网页换肤</title>
     <style>
-        #title {
-            color: red;
+        #d1 {
+            width: 542px;
+            height: 60px;
+            margin: 25px 5px 18px 5px;
+            border: 1px #666666 solid;
         }
         
-        #front {
-            height: 50px;
-            width: 630px;
-            border: 1px solid gray;
+        #x {
+            color: red;
+            font-size: 30px;
         }
         
         li {
@@ -21,129 +23,116 @@
             list-style: none;
         }
         
-        #c1 {
+        .color1 {
             width: 20px;
-            height: 20px;
+            height: 30px;
             background-color: gray;
             position: relative;
             left: -30px;
         }
         
-        #c2 {
+        .color2 {
             width: 20px;
-            height: 20px;
-            background-color: purple;
+            height: 30px;
+            background-color: blanchedalmond;
             position: relative;
-            left: -20px;
+            left: -15px;
         }
         
-        #c3 {
+        .color3 {
             width: 20px;
-            height: 20px;
-            background-color: pink;
+            height: 30px;
+            background-color: fuchsia;
             position: relative;
-            left: -10px;
+            left: -0px;
         }
         
-        #c4 {
+        .color4 {
             width: 20px;
-            height: 20px;
-            background-color: aqua;
+            height: 30px;
+            background-color: crimson;
             position: relative;
-            left: 0px;
+            left: 15px;
         }
         
-        #c5 {
+        .color5 {
             width: 20px;
-            height: 20px;
+            height: 30px;
             background-color: yellow;
             position: relative;
-            left: 10px;
+            left: 30px;
         }
         
-        #c6 {
+        .color6 {
             width: 20px;
-            height: 20px;
-            background-color: green;
+            height: 30px;
+            background-color: olive;
             position: relative;
-            left: 20px;
+            left: 45px;
         }
         
-        #bh {
+        #b {
             margin: 0 auto;
-            margin-bottom: 30px;
             width: 560px;
-            height: 70px;
+            height: 65px;
             position: relative;
-            top: 20px;
         }
     </style>
 </head>
 
 <body>
-    <fieldset style="width: 650px;">
-        <legend>
-            <h1 id="title">网页换肤</h1>
-        </legend>
-        <div id="front">
+    <fieldset style="width: 550px; height: 220px;">
+        <legend id="x">网页换肤</legend>
+        <div id="d1">
             <ul>
-                <li id="c1"></li>
-                <li id="c2"></li>
-                <li id="c3"></li>
-                <li id="c4"></li>
-                <li id="c5"></li>
-                <li id="c6"></li>
+                <li class="color1"></li>
+                <li class="color2"></li>
+                <li class="color3"></li>
+                <li class="color4"></li>
+                <li class="color5"></li>
+                <li class="color6"></li>
             </ul>
         </div>
-        <div id="bh">
+        <div id="b">
             LocalStorage将数据保存在客户端本地的硬件设备中，即使浏览器被关闭了，该数据仍然存在，下次打开浏览器访问网站时仍然可以继续使用。
         </div>
-    </fieldset>
 </body>
-<script>
-    //localStorage.pagecount = 0;
-    if (localStorage.pagecount) {
-        localStorage.pagecount = Number(localStorage.pagecount) + 1;
-    } else {
-        localStorage.pagecount = 1;
-    }
-    //获取id
-    var bh = document.getElementById("bh");
-    var list = document.getElementsByTagName("li");
-    //网页打开时得到localStorage的值，从获取的值得到加载颜色
-    //以计数网页被访问了多少次做为默认值的条件
-    var color1;
-    if (localStorage.pagecount == 1) {
-        list[0].style.top = -10 + 'px';
-        color1 = window.getComputedStyle(list[0], null).backgroundColor;
-        bh.style.backgroundColor = color1;
-    } else {
 
+<script>
+    var b = document.getElementById("b");
+    var list = document.getElementsByTagName("li");
+    var color;
+
+    if (!window.localStorage) {
+        alert("浏览器不支持localstorage");
+    }
+
+    //归零
+    //localStorage.pagecount = 0;
+    if (localStorage.pagecount == 1 && localStorage.pagecount == 0) {
+        list[0].style.top = -7 + 'px';
+        b.style.backgroundColor = window.getComputedStyle(list[0], null).backgroundColor;
+    } else {
         window.onload = function() {
-            var a = localStorage.getItem("color"); //将得到的值赋给a
-            list[a].style.top = -10 + "px";
-            color1 = window.getComputedStyle(list[a], null).backgroundColor;
-            bh.style.backgroundColor = color1;
+            var s = localStorage.getItem("color");
+            list[s].style.top = -7 + "px";
+            b.style.backgroundColor = window.getComputedStyle(list[s], null).backgroundColor;
         }
     }
+    //增加访问次数
+    localStorage.pagecount = Number(localStorage.pagecount) + 1;
+    //document.write("Visits: " + localStorage.pagecount);
 
-
-    //循环点击，利用闭包实现点击一个，被点击的变化，其余也跟着变化
-    //用到了getComputedStyle方法
-    //element.style 读取的只是元素的内联样式，即写在元素的 style 属性上的样式；
-    //而 getComputedStyle 读取的样式是最终样式，包括了内联样式、嵌入样式和外部样式。
     for (var i = 0; i < list.length; ++i) {
-        var li = list[i];
-        li.onclick = (function(index) {
+        list[i].onclick = (function(index) {
             return function() {
-                for (var j = 0; j < list.length; ++j) {
-                    if (j == index) {
-                        list[j].style.top = -10 + "px";
-                        localStorage.setItem("color", j);
-                        color1 = window.getComputedStyle(list[j], null).backgroundColor;
-                        bh.style.backgroundColor = color1;
+                for (var k = 0; k < list.length; k++) {
+                    if (k == index) {
+                        list[k].style.top = -7 + "px";
+                        localStorage.setItem("color", k);
+                        b.style.backgroundColor = window.getComputedStyle(list[k], null).backgroundColor;
                     } else {
-                        list[j].style.top = 0 + "px";
+                        list[k].style.top = 0 + "px";
                     }
                 }
             }
