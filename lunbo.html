@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仿京东轮播图</title>
+    <script src="JS/Jquery.js"></script>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        #banner {
+            position: relative;
+            width: 590px;
+            height: 470PX;
+            margin: 0 auto;
+            border: 2px solid white;
+        }
+        
+        .img {
+            width: 590px;
+            height: 470PX;
+            position: absolute;
+            display: none;
+        }
+        
+        img {
+            width: 590px;
+            height: 470px;
+        }
+        
+        .btn-list {
+            width: 152px;
+            height: 20px;
+            left: 40px;
+            bottom: 20px;
+            position: absolute;
+        }
+        
+        .btn {
+            width: 10px;
+            height: 10px;
+            float: left;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            margin-right: 6px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .active {
+            background-color: white;
+            box-shadow: 0px 0px 2px 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        .point {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            font-size: 25px;
+            line-height: 45px;
+            top: 45%;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            text-align: center;
+            opacity: 0.5;
+        }
+        
+        .point:hover {
+            opacity: 0.5;
+            color: white;
+            background: black;
+        }
+        
+        .left {
+            border-top-right-radius: 60%;
+            border-bottom-right-radius: 60%;
+            left: 0px;
+        }
+        
+        .right {
+            border-top-left-radius: 60%;
+            border-bottom-left-radius: 60%;
+            right: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="banner">
+        <div class="warp">
+            <a href="#" class="img" style="display: block;"><img src="imgs/1.jpg" alt="" /></a>
+            <a href="#" class="img"><img src="imgs/2.jpg" alt="" /></a>
+            <a href="#" class="img"><img src="imgs/3.jpg" alt="" /></a>
+            <a href="#" class="img"><img src="imgs/4.jpg" alt="" /></a>
+            <a href="#" class="img"><img src="imgs/5.jpg" alt="" /></a>
+            <a href="#" class="img"><img src="imgs/6.jpg" alt="" /></a>
+            <a href="#" class="img"><img src="imgs/7.jpg" alt="" /></a>
+            <a href="#" class="img"><img src="imgs/8.jpg" alt="" /></a>
+        </div>
+        <div class="btn-list">
+            <div class="btn active"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
+            <div class="btn"></div>
+        </div>
+        <div class="point left">&lt;</div>
+        <div class="point right">&gt;</div>
+    </div>
+</body>
+<script>
+    var index = 0;
+    var stop = false;
+    var $li = $(".warp").children(".img");
+    var $page = $(".btn-list").children(".btn");
+
+    $page.hover(function() {
+        index = $(this).index();
+        $(this).addClass("active").stop(true, true).siblings().removeClass("active"); //圆点列表
+        $li.eq(index).stop(true, true).fadeIn(600).siblings().fadeOut(600); //淡入淡出
+    });
+
+    //向左向右
+    $(".left").click(function() {
+        clearInterval(timer);
+        index--;
+        if (index < 0) {
+            index = $li.length - 1;
+        }
+        $li.eq(index).stop(true, true).fadeIn().siblings().fadeOut();
+        $page.eq(index).addClass("active").stop(true, true).siblings().removeClass("active");
+    });
+
+    $(".right").click(function() {
+        clearInterval(timer);
+        index++;
+        if (index > $li.length - 1) {
+            index = 0;
+        }
+        $li.eq(index).stop(true, true).fadeIn().siblings().fadeOut();
+        $page.eq(index).addClass("active").stop(true, true).siblings().removeClass("active");
+    });
+
+    //定时器
+    var timer = setInterval(function() {
+        if (stop) {
+            return;
+        }
+        index++;
+        if (index > $li.length - 1) {
+            index = 0;
+        }
+        $li.eq(index).stop(true, true).fadeIn().siblings().fadeOut();
+        $page.eq(index).addClass("active").stop(true, true).siblings().removeClass("active");
+    }, 2000);
+
+    //鼠标移入，停止播放
+    $("#banner").mousemove(function() {
+        clearInterval(timer);
+    }).mouseout(function() {
+        timer = setInterval(function() {
+            if (stop) {
+                return;
+            }
+            index++;
+            if (index > $li.length - 1) {
+                index = 0;
+            }
+            $li.eq(index).stop(true, true).fadeIn().siblings().fadeOut();
+            $page.eq(index).addClass("active").stop(true, true).siblings().removeClass("active");
+        }, 2000);
+    });
+</script>
+
+</html>
